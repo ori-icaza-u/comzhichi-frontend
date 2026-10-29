@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormField, FormRoot, email, form, required } from '@angular/forms/signals';
+import { FormField, FormRoot, email, form, pattern, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,8 +25,9 @@ export class Login {
   loginForm = form(
     this.loginModel,
     (path) => {
-      required(path.email, { message: 'El email es obligatorio' });
-      email(path.email, { message: 'Email no válido' });
+      required(path.email, { message: 'El correo electrónico es obligatorio' });
+      pattern(path.email, /@/, { message: 'El correo electrónico debe contener @' });
+      email(path.email, { message: 'Correo electrónico no válido' });
       required(path.password, { message: 'La contraseña es obligatoria' });
     },
     {
@@ -48,7 +49,7 @@ export class Login {
           }
         },
         onInvalid: () => {
-          this.error.set('Revisa los campos del formulario');
+          this.loginForm().markAsTouched();
         },
       },
     },
