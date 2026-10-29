@@ -1,48 +1,79 @@
-<div class="page">
-  <aside class="brand-panel">
-    <div class="deco-circle c1"></div>
-    <div class="deco-circle c2"></div>
-    <div class="brand-content">
-      <div class="logo">
-        <img src="/comzhichi-logo.png" alt="Comzhichi" class="logo-img" />
-      </div>
-      <h1>Domina un<br/>nuevo idioma</h1>
-      <p>La plataforma de la academia para aprender, practicar y certificarte con los mejores profesores.</p>
-      <ul class="features">
-        <li><mat-icon>check_circle</mat-icon> Clases en vivo y grabadas</li>
-        <li><mat-icon>check_circle</mat-icon> Seguimiento de tu progreso</li>
-        <li><mat-icon>check_circle</mat-icon> Certificados oficiales</li>
-      </ul>
+<div class="login-page">
+  <!-- Barra superior (Header) -->
+  <header class="app-header">
+    <div class="header-content">
+      <img src="/comzhichi-logo.png" alt="Comzhichi Logo" class="header-logo" />
+      <span class="header-brand-title">Comzhichi</span>
     </div>
-  </aside>
-  <main class="form-panel">
-    <div class="form-card">
+  </header>
+
+  <!-- Contenido central con tarjeta -->
+  <main class="main-container">
+    <div class="login-card">
       <div class="card-header">
-        <h2>Bienvenido de nuevo</h2>
-        <p>Inicia sesión para continuar</p>
+        <h1 class="card-title">Bienvenido a Comzhichi</h1>
+        <h2 class="card-subtitle">Inicie sesión para continuar</h2>
       </div>
-      <form [formRoot]="loginForm" class="form">
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Email</mat-label>
-          <mat-icon matPrefix>mail_outline</mat-icon>
-          <input matInput type="email" [formField]="loginForm.email" />
-          <mat-error>{{ loginForm.email().errors()[0]?.message }}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Contraseña</mat-label>
-          <mat-icon matPrefix>lock_outline</mat-icon>
-          <input matInput type="password" [formField]="loginForm.password" />
-          <mat-error>{{ loginForm.password().errors()[0]?.message }}</mat-error>
-        </mat-form-field>
+
+      <form [formRoot]="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input
+            id="email"
+            type="email"
+            class="form-input"
+            [class.input-error]="(loginForm.email().touched() || loginForm.email().dirty()) && loginForm.email().errors().length > 0"
+            placeholder="Ingrese su correo electrónico"
+            [formField]="loginForm.email"
+            autocomplete="email"
+          />
+          @if ((loginForm.email().touched() || loginForm.email().dirty()) && loginForm.email().errors().length) {
+            <span class="field-error">{{ loginForm.email().errors()[0]?.message }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            class="form-input"
+            [class.input-error]="(loginForm.password().touched() || loginForm.password().dirty()) && loginForm.password().errors().length > 0"
+            placeholder="Ingrese su contraseña"
+            [formField]="loginForm.password"
+            autocomplete="current-password"
+          />
+          @if ((loginForm.password().touched() || loginForm.password().dirty()) && loginForm.password().errors().length) {
+            <span class="field-error">{{ loginForm.password().errors()[0]?.message }}</span>
+          }
+        </div>
+
         @if (error()) {
-          <p class="error"><mat-icon>error_outline</mat-icon> {{ error() }}</p>
+          <div class="error-alert">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ error() }}</span>
+          </div>
         }
-        <button matButton="filled" type="submit" class="submit-btn">Ingresar</button>
+
+        <button type="submit" class="submit-btn">
+          Iniciar sesión
+        </button>
       </form>
+
       <div class="card-footer">
-        <span>¿No tienes cuenta?</span>
-        <a routerLink="/auth/register">Crear cuenta</a>
+        <span class="footer-prompt">¿Aun no tiene una cuenta?</span>
+        <a routerLink="/auth/register" class="register-link">Cree una aquí</a>
       </div>
     </div>
   </main>
+
+  <!-- Barra inferior (Footer) -->
+  <footer class="app-footer">
+    <span class="copyright">2026 Comzhichi. Todos los derechos reservados</span>
+    <nav class="footer-links">
+      <a href="javascript:void(0)" class="footer-link">Seguridad</a>
+      <a href="javascript:void(0)" class="footer-link">Soporte técnico</a>
+      <a href="javascript:void(0)" class="footer-link">Condiciones</a>
+    </nav>
+  </footer>
 </div>
